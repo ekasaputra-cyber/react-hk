@@ -7,7 +7,7 @@ import BarBawah from './components/barbottom';
 
 export default function Home() {
   return (
-    <div className="max-w-md mx-auto bg-white min-h-screen"> 
+    <div className="max-w-md mx-auto bg-white min-h-screen shadow-xl pb-16"> 
       <NamOrt />
       <div className="px-4">
         <NameCard />
@@ -21,7 +21,9 @@ export default function Home() {
       <div className="px-4">
         <Diskusi />
       </div>
-      <BarBawah />
+      <div className="">
+        <BarBawah />
+      </div>
     </div>
   );
 }
