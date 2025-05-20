@@ -1,3 +1,5 @@
+
+import  AnimatedWrapper  from './motion-provider';
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import './globals.css';
@@ -52,9 +54,11 @@ export default function RootLayout({
         {/* Removed duplicate Poppins font loading */}
       </head>
       <body className={`bg-white ${poppins.className}`}>
-        <div className="container-fluid">
-          {children}
-        </div>
+        <AnimatedWrapper>
+          <div className="container-fluid">
+            {children}
+          </div>
+        </AnimatedWrapper>
 
         {/* Scripts */}
         <Script 
@@ -63,8 +67,6 @@ export default function RootLayout({
           integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
           crossOrigin="anonymous"
         />
-        
-        <Script src="/comWa/javascript.js" strategy="lazyOnload" />
 
         <Script id="navbar-script" strategy="afterInteractive">
           {`

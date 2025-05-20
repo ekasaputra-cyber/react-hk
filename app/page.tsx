@@ -5,6 +5,7 @@ import MenuBox2 from './components/menukotak2';
 import Diskusi from './components/frdiskusi';
 import BarBawah from './components/barbottom';
 
+
 export default function Home() {
   return (
     <div className="max-w-md mx-auto bg-white min-h-screen pb-16"> 
