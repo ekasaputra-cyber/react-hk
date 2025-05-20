@@ -6,18 +6,17 @@ const Diskusi = () => {
   const [showDetail, setShowDetail] = useState(false);
 
   return (
-    <div className="relative px-4 py-3">
-      {/* Title Section */}
+    <div className="relative px-0 py-0">
+      
       <div className="flex justify-between items-center mb-3">
         <h3 className="font-bold text-lg">Diskusi Populer</h3>
         <a href="#" className="text-cyan-500 text-sm">Lihat Semua</a>
       </div>
       
-      {/* Horizontal Scroll Container */}
       <div className="relative">
         <div className="overflow-x-auto scrollbar-hide">
           <div className="flex space-x-3 pb-3" style={{ width: 'max-content' }}>
-            {/* Card 1 */}
+
             <div className="w-64 flex-shrink-0 bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
               <div className="p-4">
                 <span className="inline-block bg-cyan-100 text-cyan-800 text-xs px-2 py-1 rounded-full mb-2">Populer</span>
@@ -33,7 +32,7 @@ const Diskusi = () => {
               </div>
             </div>
             
-            {/* Card 2 */}
+           
             <div className="w-64 flex-shrink-0 bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
               <div className="p-4">
                 <span className="inline-block bg-cyan-100 text-cyan-800 text-xs px-2 py-1 rounded-full mb-2">Populer</span>
@@ -49,7 +48,7 @@ const Diskusi = () => {
               </div>
             </div>
             
-            {/* Card 3 */}
+            
             <div className="w-64 flex-shrink-0 bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
               <div className="p-4">
                 <span className="inline-block bg-cyan-100 text-cyan-800 text-xs px-2 py-1 rounded-full mb-2">Terbaru</span>

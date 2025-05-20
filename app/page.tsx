@@ -7,18 +7,18 @@ import BarBawah from './components/barbottom';
 
 export default function Home() {
   return (
-    <div className="max-w-md mx-auto bg-white min-h-screen shadow-xl pb-16"> 
+    <div className="max-w-md mx-auto bg-white min-h-screen pb-16"> 
       <NamOrt />
-      <div className="px-4">
+      <div className="">
         <NameCard />
       </div>
-      <div className="px-4">
+      <div className="">
         <MenuBox />
       </div>
-      <div className="px-4">
+      <div className="pt-8">
         <MenuBox2 />
       </div>
-      <div className="px-4">
+      <div className="">
         <Diskusi />
       </div>
       <div className="">
