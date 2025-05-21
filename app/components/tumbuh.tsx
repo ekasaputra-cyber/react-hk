@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
@@ -112,7 +113,12 @@ export default function GrowthChart() {
 
   return (
     <div className="bg-white p-4 rounded-lg shadow">
-      <h2 className="text-xl font-bold mb-4 text-gray-800">Grafik Tumbuh Kembang</h2>
+      <div className="flex items-center my-4">
+          <Link href="/" className="text-cyan-400 hover:text-cyan-500 transition-colors">
+                <i className="fa-solid fa-circle-chevron-left text-2xl mr-3"></i>
+          </Link>
+          <h2 className="text-xl font-bold text-gray-800">Grafik Tumbuh Kembang</h2>
+      </div>
       
       {/* Tabs */}
       <div className="flex mb-6 border-b">

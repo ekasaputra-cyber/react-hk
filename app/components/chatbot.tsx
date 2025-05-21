@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { FiSend, FiUser, FiMessageSquare } from 'react-icons/fi';
 import { IoMdMedical } from 'react-icons/io';
+import Link from 'next/link';
+
 
 type Message = {
   id: string;
@@ -15,7 +17,7 @@ export default function DoctorChatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Halo! Saya Dr. Budi, asisten dokter anak virtual. Ada yang bisa saya bantu terkait kesehatan anak Anda?',
+      text: 'Halo! Saya Panda, asisten dokter anak virtual. Ada yang bisa saya bantu terkait kesehatan anak Anda?',
       sender: 'bot',
       timestamp: new Date()
     }
@@ -89,7 +91,10 @@ export default function DoctorChatbot() {
       {/* Header */}
       <div className="bg-cyan-600 text-white p-4 shadow-md">
         <div className="flex items-center">
-          <IoMdMedical className="text-2xl mr-3" />
+          <Link href="/" className="text-cyan-400 hover:text-cyan-500 transition-colors">
+                <i className="fa-solid fa-circle-chevron-left text-2xl mr-3"></i>
+          </Link>
+          
           <div>
             <h1 className="text-xl font-bold">Chat Dokter Anak</h1>
             <p className="text-sm opacity-90">Dibimbing oleh tim dokter spesialis anak</p>
@@ -111,7 +116,7 @@ export default function DoctorChatbot() {
             >
               {message.sender === 'bot' && (
                 <div className="mr-2 text-cyan-500">
-                  <IoMdMedical size={20} />
+                  <img src="/image/pandok.png" alt="Foto Dokter" className="w-36 object-cover rounded" />
                 </div>
               )}
               <div>
