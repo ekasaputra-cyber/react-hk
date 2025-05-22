@@ -5,7 +5,7 @@ export default function ChatPage() {
   return <DoctorChatbot />;
 }
 
-// PAKE OPEN AI 
+// PAKE gemini (stack)
 
 // import DoctorChat from '../components/chatbotai';
 

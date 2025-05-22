@@ -43,15 +43,18 @@ const MenuBox = () => {
       </button> */}
       
       {/* Tahapan Kembang */}
-      <button className="flex flex-col items-center p-3 rounded-lg bg-white border border-gray-200 hover:bg-cyan-50 transition-colors">
-        <div className="h-12 w-12 bg-cyan-50 rounded-full mb-2 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-          </svg>
-        </div>
-        <p className="text-xs text-center text-gray-600">Tahapan Kembang</p>
-      </button>
-      
+      <Link
+          href="/tahap-kembang" // Ganti dengan path halaman TahapKembang Anda
+          className="flex flex-col items-center p-3 rounded-lg bg-white border border-gray-200 hover:bg-cyan-50 transition-colors"
+        >
+          <div className="h-12 w-12 bg-cyan-50 rounded-full mb-2 flex items-center justify-center">
+            {/* Ikon untuk Tahapan Kembang (seperti grafik/pertumbuhan) */}
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+          </div>
+          <p className="text-xs text-center text-gray-600">Tahapan Kembang</p>
+      </Link>
       {/* Info Produk */}
       <button className="flex flex-col items-center p-3 rounded-lg bg-white border border-gray-200 hover:bg-cyan-50 transition-colors">
         <div className="h-12 w-12 bg-cyan-50 rounded-full mb-2 flex items-center justify-center">

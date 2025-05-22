@@ -25,6 +25,9 @@ const BarBawah = () => {
       case 'konten':
         router.push('/konten');
         break;
+      case 'komunitas':
+        router.push('/komunitas');
+        break;
       
       default:
         // Do nothing or add default behavior
