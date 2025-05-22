@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react';
-import { FiSend, FiUser, FiMessageSquare } from 'react-icons/fi';
-import { IoMdMedical } from 'react-icons/io';
+import { FiSend } from 'react-icons/fi'; // FiUser dan FiMessageSquare tidak digunakan
+import { IoMdMedical } from 'react-icons/io'; // Masih ada tapi tidak digunakan di UI yang sekarang
 import Link from 'next/link';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa'; // Import icons for expand/collapse
 
@@ -25,23 +25,55 @@ export default function DoctorChatbot() {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [showCommonQuestions, setShowCommonQuestions] = useState(true); // State baru untuk mengontrol visibilitas
+  const [showCommonQuestions, setShowCommonQuestions] = useState(true); 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const commonQuestions = [
-    'Demam pada anak',
-    'Imunisasi yang dibutuhkan',
-    'Pola makan sehat',
-    'Alergi susu sapi',
-    'Tumbuh kembang normal',
-    'Anak susah tidur',
-    'Ruam popok',
-    'Batuk dan pilek pada anak',
-    'Tips menstimulasi balita',
-    'Mengatasi tantrum anak'
+  // --- PERBAIKAN: commonQuestions sekarang adalah array objek dengan pertanyaan dan jawaban ---
+  const commonQuestionsData = [
+    {
+      question: 'Demam pada anak',
+      response: "Demam pada anak biasanya merupakan reaksi normal tubuh terhadap infeksi. Pastikan anak tetap terhidrasi dengan baik dan berikan parasetamol atau ibuprofen sesuai dosis. Jika demamnya sangat tinggi (>39°C), disertai kejang, ruam, atau tidak turun dalam 24-48 jam, segera konsultasikan ke dokter anak."
+    },
+    {
+      question: 'Imunisasi yang dibutuhkan',
+      response: "Imunisasi sangat penting untuk melindungi anak dari penyakit berbahaya. Untuk anak usia 0-12 bulan, imunisasi dasar yang diperlukan antara lain Hepatitis B, Polio, BCG, DPT-HB-Hib, dan Campak. Lanjutkan dengan imunisasi booster dan tambahan sesuai rekomendasi IDAI dan jadwal imunisasi anak Anda."
+    },
+    {
+      question: 'Pola makan sehat',
+      response: "Pola makan sehat untuk balita (1-5 tahun) harus mengandung karbohidrat kompleks, protein, lemak sehat, serta vitamin dan mineral dari beragam buah dan sayur. Pastikan porsi sesuai usia, tekstur makanan disesuaikan dengan kemampuan mengunyah anak, dan hindari makanan olahan tinggi gula/garam."
+    },
+    {
+      question: 'Alergi susu sapi',
+      response: "Alergi susu sapi sering muncul sebagai gejala seperti ruam kulit (eksim), diare kronis, sembelit, muntah, kolik parah, atau bahkan kesulitan bernapas. Jika dicurigai, segera konsultasikan dengan dokter anak. Dokter mungkin akan menyarankan pengganti susu formula hipoalergenik atau diet eliminasi untuk ibu menyusui. Jangan mengganti susu tanpa anjuran dokter."
+    },
+    {
+      question: 'Tumbuh kembang normal',
+      response: "Setiap anak memiliki tempo perkembangan yang berbeda. Namun secara umum di usia 1 tahun anak sudah bisa berdiri sendiri, mengatakan beberapa kata sederhana, merespon ketika dipanggil namanya, dan menunjuk benda. Penting untuk terus menstimulasi anak melalui bermain dan interaksi. Jika ada kekhawatiran signifikan, konsultasikan dengan dokter anak."
+    },
+    {
+      question: 'Anak susah tidur',
+      response: "Sulit tidur pada anak bisa disebabkan oleh banyak faktor, mulai dari rutinitas tidur yang kurang teratur, lingkungan tidur tidak nyaman, hingga adanya kekhawatiran atau sakit. Coba ciptakan rutinitas tidur yang konsisten, pastikan kamar gelap dan tenang, serta hindari gadget sebelum tidur. Jika berlanjut, cari nasihat medis."
+    },
+    {
+      question: 'Ruam popok',
+      response: "Ruam popok adalah iritasi kulit umum pada bayi. Untuk mengatasinya, pastikan mengganti popok secara rutin (setiap 2-3 jam), bersihkan area popok dengan air bersih dan keringkan sepenuhnya sebelum mengenakan popok baru, serta gunakan krim ruam popok yang mengandung zinc oxide. Biarkan area popok terbuka sesekali agar kulit bernapas."
+    },
+    {
+      question: 'Batuk dan pilek pada anak',
+      response: "Batuk dan pilek pada anak seringkali disebabkan oleh infeksi virus dan biasanya bisa diatasi di rumah. Pastikan anak istirahat cukup, penuhi kebutuhan cairan (air putih, ASI, atau sup), dan berikan makanan bergizi. Penguapan atau tetes hidung saline bisa membantu. Jika gejala memburuk, disertai demam tinggi terus-menerus, sesak napas, atau tidak membaik dalam seminggu, segera ke dokter."
+    },
+    {
+      question: 'Tips menstimulasi balita',
+      response: "Untuk stimulasi balita (1-3 tahun), ajak mereka bermain peran, membaca buku bergambar bersama, menyanyi, melakukan aktivitas fisik di luar ruangan (berlari, melompat), dan ajarkan kosakata baru. Ini membantu perkembangan kognitif, bahasa, motorik, dan sosial-emosional mereka."
+    },
+    {
+      question: 'Mengatasi tantrum anak',
+      response: "Tantrum pada anak adalah bagian normal dari perkembangan emosional. Saat anak tantrum, tetaplah tenang, validasi perasaannya ('Kamu marah ya, karena...'), dan tawarkan pilihan lain. Hindari memberikan perhatian berlebihan saat tantrum, namun tetap pastikan keamanannya. Setelah tantrum reda, peluk dan bicarakan perasaannya."
+    }
   ];
+  // --- AKHIR PERBAIKAN STRUKTUR DATA ---
 
-  // Auto scroll to bottom
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -53,10 +85,12 @@ export default function DoctorChatbot() {
   const handleSendMessage = () => {
     if (!inputValue.trim()) return;
 
+    const userMessageText = inputValue.trim(); // Simpan teks pesan pengguna
+
     // Add user message
     const userMessage: Message = {
       id: Date.now().toString(),
-      text: inputValue,
+      text: userMessageText, // Gunakan teks pesan pengguna yang sudah di-trim
       sender: 'user',
       timestamp: new Date()
     };
@@ -65,31 +99,15 @@ export default function DoctorChatbot() {
     setInputValue('');
     setIsTyping(true);
 
-    // Simulate bot response after 1-2 seconds
     setTimeout(() => {
-      const botResponses = [
-        "Saya memahami kekhawatiran Anda. Demam pada anak biasanya merupakan reaksi normal tubuh terhadap infeksi. Apakah anak Anda menunjukkan gejala lain seperti batuk atau diare?",
-        "Imunisasi penting untuk melindungi anak dari penyakit berbahaya. Untuk anak usia 0-12 bulan, imunisasi dasar yang diperlukan antara lain Hepatitis B, Polio, BCG, DPT-HB-Hib, dan Campak.",
-        "Pola makan sehat untuk balita harus mengandung karbohidrat, protein, lemak sehat, serta vitamin dan mineral. Pastikan porsi sesuai usia dan tekstur makanan disesuaikan dengan kemampuan mengunyah anak.",
-        "Alergi susu sapi sering muncul sebagai ruam kulit, diare, atau muntah. Alternatifnya bisa menggunakan susu soya atau susu hipoalergenik. Namun konsultasikan dulu dengan dokter anak.",
-        "Setiap anak memiliki tempo perkembangan yang berbeda. Namun secara umum di usia 1 tahun anak sudah bisa berdiri sendiri, mengatakan beberapa kata sederhana, dan merespon ketika dipanggil namanya.",
-        "Sulit tidur pada anak bisa disebabkan oleh banyak hal, mulai dari rutinitas tidur yang kurang teratur hingga adanya kekhawatiran tertentu. Coba ciptakan rutinitas tidur yang konsisten, pastikan kamar nyaman, dan hindari gadget sebelum tidur.",
-        "Ruam popok adalah masalah kulit yang umum pada bayi. Pastikan mengganti popok secara rutin, bersihkan area popok dengan lembut, dan biarkan kulit bayi kering sebelum mengenakan popok baru. Penggunaan krim ruam popok juga dapat membantu.",
-        "Batuk dan pilek pada anak seringkali disebabkan oleh infeksi virus. Pastikan anak istirahat cukup, penuhi kebutuhan cairan, dan berikan makanan bergizi. Jika gejala memburuk atau disertai demam tinggi, segera ke dokter.",
-        "Untuk stimulasi balita, ajak mereka bermain peran, membaca buku bersama, menyanyi, atau melakukan aktivitas fisik di luar ruangan. Ini membantu perkembangan kognitif, bahasa, dan motorik mereka.",
-        "Tantrum pada anak adalah bagian dari perkembangan emosional mereka. Tetap tenang, validasi perasaannya, dan tawarkan pilihan lain. Hindari memberikan perhatian berlebihan saat tantrum, namun tetap pastikan keamanannya.",
-        "Bagaimana kondisi nafsu makan anak Anda saat ini? Pola makan sehat untuk anak usia sekolah sebaiknya mencakup beragam buah, sayur, biji-bijian utuh, protein tanpa lemak, dan produk susu rendah lemak. Hindari makanan tinggi gula dan lemak jenuh.",
-        "Anak usia 4-6 tahun perlu stimulasi yang melibatkan aktivitas fisik, seperti berlari dan melompat, serta aktivitas yang melatih keterampilan motorik halus, seperti menggambar dan menyusun balok. Bermain puzzle juga bagus untuk kognitif.",
-        "Masa prasekolah adalah waktu krusial untuk perkembangan sosial-emosional. Ajarkan anak untuk berbagi, berempati, dan menyelesaikan konflik sederhana. Bermain dengan teman sebaya sangat membantu dalam hal ini.",
-        "Jika anak Anda sering sakit, pastikan ia mendapatkan nutrisi yang cukup dari makanan bergizi, istirahat yang cukup, dan lingkungan yang bersih. Cuci tangan secara teratur juga penting untuk mencegah penyebaran kuman.",
-        "Anak usia 7-12 tahun sedang dalam masa perkembangan akademis. Dukung minat belajar mereka, ciptakan lingkungan belajar yang nyaman, dan bantu mereka mengatasi tantangan di sekolah. Ingat, bermain juga tetap penting!"
-      ];
-
-      const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
+      // --- PERBAIKAN: Cari respons yang sesuai dengan pertanyaan pengguna ---
+      const foundQuestion = commonQuestionsData.find(q => q.question.toLowerCase() === userMessageText.toLowerCase());
+      const botResponseText = foundQuestion ? foundQuestion.response : "Maaf, saya belum memahami pertanyaan Anda. Bisakah Anda mengulanginya atau bertanya dengan kata kunci yang lebih spesifik?";
+      // --- AKHIR PERBAIKAN LOGIKA RESPON ---
       
       const botMessage: Message = {
         id: Date.now().toString(),
-        text: randomResponse,
+        text: botResponseText,
         sender: 'bot',
         timestamp: new Date()
       };
@@ -101,6 +119,11 @@ export default function DoctorChatbot() {
 
   const handleQuickQuestion = (question: string) => {
     setInputValue(question);
+    // Langsung kirim pesan saat pertanyaan cepat diklik
+    // Ini akan memicu handleSendMessage dengan inputValue yang sudah diisi
+    setTimeout(() => { // Memberi sedikit jeda agar inputValue terupdate di state
+        handleSendMessage();
+    }, 0); 
   };
 
   return (
@@ -165,7 +188,7 @@ export default function DoctorChatbot() {
       <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t shadow-xl rounded">
         {/* Quick Questions */}
         <div className="p-4">
-          <div className="flex justify-between items-center mb-2"> {/* Flexbox untuk mensejajarkan teks dan tombol */}
+          <div className="flex justify-between items-center mb-2">
             <p className="text-sm text-gray-500">Pertanyaan umum:</p>
             <button
               onClick={() => setShowCommonQuestions(!showCommonQuestions)}
@@ -174,15 +197,15 @@ export default function DoctorChatbot() {
               {showCommonQuestions ? <FaChevronUp size={16} /> : <FaChevronDown size={16} />}
             </button>
           </div>
-          {showCommonQuestions && ( // Kondisi rendering berdasarkan state
+          {showCommonQuestions && (
             <div className="flex flex-wrap gap-2 mb-4">
-              {commonQuestions.map((question, index) => (
+              {commonQuestionsData.map((item, index) => ( // Gunakan commonQuestionsData
                 <button
                   key={index}
-                  onClick={() => handleQuickQuestion(question)}
+                  onClick={() => handleQuickQuestion(item.question)} // Kirim item.question
                   className="text-xs bg-cyan-50 text-cyan-600 px-3 py-1 rounded-full hover:bg-cyan-100 transition"
                 >
-                  {question}
+                  {item.question}
                 </button>
               ))}
             </div>
